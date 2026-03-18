@@ -10,5 +10,8 @@ package Abstractfeld where
 lean_lib Abstractfeld where
   roots := #[`Abstractfeld]
 
+lean_exe roundtrip where
+  root := `Abstractfeld.Bridge.RoundTrip
+
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "master"
