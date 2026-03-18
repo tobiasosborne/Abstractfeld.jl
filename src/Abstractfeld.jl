@@ -24,14 +24,21 @@ include("egraph/tensor_theory.jl")
 include("egraph/numerical.jl")
 include("egraph/claims.jl")
 
-# --- Knowledge base ---
+# --- Knowledge base (schema) ---
 include("kb/schema.jl")
 
-# --- Search / prompt generation ---
+# --- Search / prompt generation + LLM prover ---
 include("search/prompt.jl")
+include("search/llm_prover.jl")
 
 # --- Lean verification orchestrator ---
 include("bridge/verify.jl")
+
+# --- Validation loop (needs verify.jl types) ---
+include("search/validate.jl")
+
+# --- KB store (needs Verified type from verify.jl) ---
+include("kb/store.jl")
 
 # Public API
 export Expr, Lit, Sym, Idx, App, Bind, Ann
@@ -61,6 +68,7 @@ export Claim, extract_simplification, extract_equivalences, make_claim, verify_c
 # Knowledge base
 export KnowledgeBase, create_kb, close_kb!, insert_result!, insert_fingerprint!
 export lookup_by_hash, lookup_by_level, update_level!, kb_stats
+export VerifiedResult, store!, store_from_verification!
 
 # Prompt generation
 export format_prompt, render_lean_theorem_stmt
@@ -68,5 +76,9 @@ export format_prompt, render_lean_theorem_stmt
 # Verification orchestrator
 export VerificationResult, Verified, Rejected, VerificationTimeout
 export verify, verify_trivial, render_lean_claim
+
+# LLM prover
+export generate_tactics, parse_tactic_block
+export validate_proof, attempt_prove
 
 end # module
