@@ -22,6 +22,10 @@ import Random
 include("egraph/runner.jl")
 include("egraph/tensor_theory.jl")
 include("egraph/numerical.jl")
+include("egraph/claims.jl")
+
+# --- Knowledge base ---
+include("kb/schema.jl")
 
 # Public API
 export Expr, Lit, Sym, Idx, App, Bind, Ann
@@ -44,5 +48,12 @@ export basic_algebra, scalar_rules, tensor_algebra
 
 # Numerical pre-filter
 export eval_numerical, numerical_check, numerical_fingerprint, free_syms
+
+# Claims
+export Claim, extract_simplification, extract_equivalences, make_claim, verify_claim_numerically
+
+# Knowledge base
+export KnowledgeBase, create_kb, close_kb!, insert_result!, insert_fingerprint!
+export lookup_by_hash, lookup_by_level, update_level!, kb_stats
 
 end # module
