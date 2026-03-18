@@ -36,9 +36,12 @@ include("bridge/verify.jl")
 
 # --- Validation loop (needs verify.jl types) ---
 include("search/validate.jl")
+include("search/retrieval.jl")
+include("search/batch.jl")
 
-# --- KB store (needs Verified type from verify.jl) ---
+# --- KB store + query (needs Verified type from verify.jl) ---
 include("kb/store.jl")
+include("kb/query.jl")
 
 # Public API
 export Expr, Lit, Sym, Idx, App, Bind, Ann
@@ -69,6 +72,7 @@ export Claim, extract_simplification, extract_equivalences, make_claim, verify_c
 export KnowledgeBase, create_kb, close_kb!, insert_result!, insert_fingerprint!
 export lookup_by_hash, lookup_by_level, update_level!, kb_stats
 export VerifiedResult, store!, store_from_verification!
+export lookup_claim, has_claim, similar_proofs, all_results
 
 # Prompt generation
 export format_prompt, render_lean_theorem_stmt
@@ -80,5 +84,7 @@ export verify, verify_trivial, render_lean_claim
 # LLM prover
 export generate_tactics, parse_tactic_block
 export validate_proof, attempt_prove
+export find_similar, find_similar_proofs
+export batch_verify, BatchReport
 
 end # module

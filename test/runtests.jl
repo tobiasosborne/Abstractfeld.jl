@@ -10,4 +10,5 @@ using Abstractfeld
     include("test_terminterface.jl")
     include("test_roundtrip.jl")
     include("test_egraph.jl")
+    include("test_pipeline.jl")
 end
