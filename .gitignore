@@ -2,3 +2,23 @@
 # Dolt database files (added by bd init)
 .dolt/
 *.db
+
+# Julia artifacts
+Manifest.toml
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+deps/build.log
+
+# Lean artifacts
+lean/build/
+lean/.lake/
+lean/lake-packages/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
