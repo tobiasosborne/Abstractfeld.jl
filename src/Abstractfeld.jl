@@ -27,6 +27,12 @@ include("egraph/claims.jl")
 # --- Knowledge base ---
 include("kb/schema.jl")
 
+# --- Search / prompt generation ---
+include("search/prompt.jl")
+
+# --- Lean verification orchestrator ---
+include("bridge/verify.jl")
+
 # Public API
 export Expr, Lit, Sym, Idx, App, Bind, Ann
 export IndexPos, Up, Down
@@ -55,5 +61,12 @@ export Claim, extract_simplification, extract_equivalences, make_claim, verify_c
 # Knowledge base
 export KnowledgeBase, create_kb, close_kb!, insert_result!, insert_fingerprint!
 export lookup_by_hash, lookup_by_level, update_level!, kb_stats
+
+# Prompt generation
+export format_prompt, render_lean_theorem_stmt
+
+# Verification orchestrator
+export VerificationResult, Verified, Rejected, VerificationTimeout
+export verify, verify_trivial, render_lean_claim
 
 end # module
