@@ -120,7 +120,7 @@ end
 
 function make_coord_symbol(coordinate)::Symbol
   isempty(coordinate) && return :_term_being_matched
-  Symbol("_term_being_matched_", join(coordinate, "_"))
+  Symbol("_term_being_matched_", Base.join(coordinate, "_"))
 end
 
 # TODO document

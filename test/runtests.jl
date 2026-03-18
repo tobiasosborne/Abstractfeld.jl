@@ -9,4 +9,5 @@ using Abstractfeld
     include("test_latex.jl")
     include("test_terminterface.jl")
     include("test_roundtrip.jl")
+    include("test_egraph.jl")
 end

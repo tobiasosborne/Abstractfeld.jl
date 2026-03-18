@@ -16,6 +16,13 @@ include("bridge/json.jl")
 include("egraph/EGraphRewriting.jl")
 using .EGraphRewriting
 
+import Random
+
+# --- High-level saturation API ---
+include("egraph/runner.jl")
+include("egraph/tensor_theory.jl")
+include("egraph/numerical.jl")
+
 # Public API
 export Expr, Lit, Sym, Idx, App, Bind, Ann
 export IndexPos, Up, Down
@@ -29,5 +36,13 @@ export render_latex
 # E-graph rewriting
 export EGraph, addexpr!, saturate!, extract!, astsize, SaturationParams
 export @rule, @theory, @slots
+
+# Saturation runner
+export saturate_expr, extract_best, equivalent
+export SaturationResult
+export basic_algebra, scalar_rules, tensor_algebra
+
+# Numerical pre-filter
+export eval_numerical, numerical_check, numerical_fingerprint, free_syms
 
 end # module
