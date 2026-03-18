@@ -16,6 +16,15 @@ include("bridge/json.jl")
 include("egraph/EGraphRewriting.jl")
 using .EGraphRewriting
 
+# Remap IR to match Julia syntax for e-graph rule matching.
+# :neg → :- so that @rule patterns like -(~a) match our App(:neg, ...) nodes.
+function EGraphRewriting.preprocess(e::App)
+    e.op === :neg && return App(:-, e.args)
+    e
+end
+# Unwrap Lit to its raw value so hash(lit(0)) == hash(0) in the e-graph.
+EGraphRewriting.preprocess(e::Lit) = e.val
+
 import Random
 
 # --- High-level saturation API ---

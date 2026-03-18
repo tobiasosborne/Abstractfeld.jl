@@ -107,4 +107,22 @@ theorem eval_double_neg {k : ℕ} (Γ : Env M k) (a : String) :
     eval Γ (.app "neg" [.app "neg" [.sym a]]) = Γ a := by
   simp [neg_neg]
 
+/-! ## Discovered by e-graph saturation -/
+
+/-- Discovered: (a + b) + (-b) = a. Not a rule — emergent from associativity + cancellation. -/
+theorem eval_add_cancel_right {k : ℕ} (Γ : Env M k) (a b : String) :
+    eval Γ (.app "+" [.app "+" [.sym a, .sym b], .app "neg" [.sym b]]) = Γ a := by
+  simp [add_assoc, add_neg_cancel, add_zero]
+
+/-- Discovered: (a + b) + (-(a + b)) = 0. Emergent from cancellation on compound expressions. -/
+theorem eval_compound_cancel {k : ℕ} (Γ : Env M k) (a b : String) :
+    eval Γ (.app "+" [.app "+" [.sym a, .sym b],
+                       .app "neg" [.app "+" [.sym a, .sym b]]]) = 0 := by
+  simp [add_neg_cancel]
+
+/-- Discovered: -(-(a + b)) = a + b. Double negation on compound expressions. -/
+theorem eval_double_neg_compound {k : ℕ} (Γ : Env M k) (a b : String) :
+    eval Γ (.app "neg" [.app "neg" [.app "+" [.sym a, .sym b]]]) = Γ a + Γ b := by
+  simp [neg_neg]
+
 end Abstractfeld.Tensor

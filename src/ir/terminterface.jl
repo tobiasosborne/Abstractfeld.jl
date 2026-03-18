@@ -21,6 +21,8 @@ TermInterface.arguments(e::App) = e.args
 
 function TermInterface.maketerm(::Type{App}, head, children, metadata=nothing)
     op = head isa Symbol ? head : nameof(head)
+    # Remap Julia's :- back to our :neg on extraction
+    op === :- && length(children) == 1 && (op = :neg)
     App(op, collect(Expr, children))
 end
 

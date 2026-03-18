@@ -375,6 +375,9 @@ function preprocess(e::Expr)
 end
 preprocess(x) = x
 
+## Abstractfeld IR preprocessing is defined in the parent module (after EGraphRewriting loads).
+## See src/Abstractfeld.jl for the preprocess(::App) method.
+
 """
 Recursively traverse an type satisfying the `TermInterface` and insert terms into an
 [`EGraph`](@ref). If `e` has no children (has an arity of 0) then directly
