@@ -9,6 +9,8 @@ using TermInterface
 
 # --- App nodes are the primary "call" form ---
 
+TermInterface.isexpr(::Type{App}) = true
+TermInterface.isexpr(::App) = true
 TermInterface.iscall(::Type{App}) = true
 TermInterface.iscall(::App) = true
 
@@ -17,12 +19,15 @@ TermInterface.children(e::App) = e.args
 TermInterface.operation(e::App) = e.op
 TermInterface.arguments(e::App) = e.args
 
-function TermInterface.maketerm(::Type{App}, head, children; metadata=nothing)
-    App(head, collect(Expr, children))
+function TermInterface.maketerm(::Type{App}, head, children, metadata=nothing)
+    op = head isa Symbol ? head : nameof(head)
+    App(op, collect(Expr, children))
 end
 
 # --- Bind nodes are also callable (binder is the "operation") ---
 
+TermInterface.isexpr(::Type{Bind}) = true
+TermInterface.isexpr(::Bind) = true
 TermInterface.iscall(::Type{Bind}) = true
 TermInterface.iscall(::Bind) = true
 
@@ -31,7 +36,7 @@ TermInterface.children(e::Bind) = Expr[e.var, e.body, e.metadata...]
 TermInterface.operation(e::Bind) = e.binder
 TermInterface.arguments(e::Bind) = Expr[e.var, e.body, e.metadata...]
 
-function TermInterface.maketerm(::Type{Bind}, head, children; metadata=nothing)
+function TermInterface.maketerm(::Type{Bind}, head, children, metadata=nothing)
     length(children) >= 2 || error("Bind requires at least var and body")
     Bind(head, children[1], children[2], Expr[children[i] for i in 3:length(children)])
 end
@@ -47,6 +52,8 @@ TermInterface.iscall(::Idx) = false
 
 # --- Ann delegates to inner expr ---
 
+TermInterface.isexpr(::Type{Ann}) = true
+TermInterface.isexpr(::Ann) = true
 TermInterface.iscall(::Type{Ann}) = true
 TermInterface.iscall(::Ann) = true
 TermInterface.head(e::Ann) = :ann
@@ -54,7 +61,7 @@ TermInterface.children(e::Ann) = Expr[e.expr]
 TermInterface.operation(e::Ann) = :ann
 TermInterface.arguments(e::Ann) = Expr[e.expr]
 
-function TermInterface.maketerm(::Type{Ann}, head, children; metadata=nothing)
+function TermInterface.maketerm(::Type{Ann}, head, children, metadata=nothing)
     # Preserve the annotation from the original when reconstructing
     # This is a limitation — annotations don't participate in rewriting
     error("Cannot reconstruct Ann via maketerm without annotation context")

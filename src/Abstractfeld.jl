@@ -12,6 +12,10 @@ include("ir/render/latex.jl")
 # --- Bridge ---
 include("bridge/json.jl")
 
+# --- E-graph rewriting engine ---
+include("egraph/EGraphRewriting.jl")
+using .EGraphRewriting
+
 # Public API
 export Expr, Lit, Sym, Idx, App, Bind, Ann
 export IndexPos, Up, Down
@@ -21,5 +25,9 @@ export to_sexpr, parse_sexpr
 export structural_hash
 export to_json, from_json
 export render_latex
+
+# E-graph rewriting
+export EGraph, addexpr!, saturate!, extract!, astsize, SaturationParams
+export @rule, @theory, @slots
 
 end # module

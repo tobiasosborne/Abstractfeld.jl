@@ -1,16 +1,18 @@
 name = "Abstractfeld"
 uuid = "0608ade9-67b8-4df0-883a-1c472499d54e"
-authors = ["Tobias Osborne <tobias.osborne@itp.uni-hannover.de>"]
 version = "0.1.0-dev"
+authors = ["Tobias Osborne <tobias.osborne@itp.uni-hannover.de>"]
 
 [deps]
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 TermInterface = "8ea1fca8-c5ef-4a55-8b96-4e9afe9c9a3c"
+TimerOutputs = "a759f4b9-e2f1-59dc-863e-4aeb61b1ea8f"
 
 [compat]
 JSON3 = "1"
 TermInterface = "2"
+TimerOutputs = "0.5.29"
 julia = "1.10"
 
 [extras]
